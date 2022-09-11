@@ -11,6 +11,10 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class BookSeat {
 
+	/**
+	 * @param args
+	 * @throws InterruptedException
+	 */
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		System.setProperty("webdriver.chrome.driver", "E:\\Eclipse Programs\\Selenium Workspace\\IRCTCAutomation\\src\\main\\resources\\chromedriver.exe");
@@ -56,7 +60,7 @@ public class BookSeat {
 		Thread.sleep(1000l);
 		driver.findElement(By.xpath("//button[@type=\"button\"]")).click();
 		
-		// Check the checkbox and accept the popup
+		// Check the check box and accept the popup
 		Thread.sleep(1000l);
 		driver.findElement(By.xpath("//label[@for=\"concessionBooking\"]")).click();
 		Thread.sleep(1000l);
@@ -85,6 +89,22 @@ public class BookSeat {
 		driver.findElement(By.xpath("//td//div[contains(@class,\"AVAILABLE\")]")).click();
 		Thread.sleep(2000l);
 		driver.findElement(By.xpath("(//div[contains(@class, 'form-group no-pad')])[1]//button[contains(text(), \"Book Now\")]")).click();
+		Thread.sleep(2000l);
+		driver.findElement(By.xpath("//button//span[contains(text(),\"I Agree\")]")).click();
+		Thread.sleep(2000l);
+		driver.findElement(By.xpath("//button//span[contains(text(),\"Yes\")]")).click();
+		
+		
+		Thread.sleep(2000l);
+		driver.findElement(By.xpath("//input[@placeholder=\"User Name\"]")).sendKeys("adsfsad");
+		driver.findElement(By.xpath("//input[@placeholder=\"Password\"]")).sendKeys("adsfsad");
+		driver.findElement(By.id("nlpAnswer")).sendKeys("adsfsad");
+		Thread.sleep(1000l);
+//		driver.findElement(By.xpath("//label[contains(text(),\"Login & Booking With OTP\")]")).click();
+		driver.findElement(By.xpath("//button[contains(text(),\"SIGN IN\")]")).click();
+		
+		
+		
 		
 //		for(int i=1; i<=count; i++) {
 //			Thread.sleep(2000l);
