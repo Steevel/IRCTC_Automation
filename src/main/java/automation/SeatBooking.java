@@ -9,21 +9,19 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class BookSeat {
+public class SeatBooking {
 
-	/**
-	 * @param args
-	 * @throws InterruptedException
-	 */
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws Throwable {
 		// TODO Auto-generated method stub
-		System.setProperty("webdriver.chrome.driver", "E:\\Eclipse Programs\\Selenium Workspace\\IRCTCAutomation\\src\\main\\resources\\chromedriver.exe");
 		
 		// Disabling notification
 		ChromeOptions option = new ChromeOptions ();
 		option.addArguments("--disable-notifications");
 				
-		WebDriver driver = new ChromeDriver();
+		System.setProperty("webdriver.chrome.driver", "E:\\Eclipse Programs\\Selenium Workspace\\IRCTCAutomation\\src\\main\\resources\\chromedriver.exe");
+		
+		
+		WebDriver driver = new ChromeDriver(option);
 		driver.get("https://www.irctc.co.in/nget/train-search");
 		
 		driver.manage().window().maximize();
@@ -46,6 +44,10 @@ public class BookSeat {
 		}
 		searchBox2.sendKeys(Keys.ENTER);
 		
+		// Select journey date
+		driver.findElement(By.xpath("//p-calendar[@formcontrolname=\"journeyDate\"]")).click();
+		Thread.sleep(2000l);
+		driver.findElement(By.xpath("//div[contains(@class, \"ui-datepicker-calendar-container\")]//td//a[contains(text(), \"17\")]")).click();
 
 		// Select Journey Class
 		driver.findElement(By.xpath("//div[@role=\"button\"]")).click();
@@ -70,26 +72,25 @@ public class BookSeat {
 		Thread.sleep(2000l);
 		driver.findElement(By.xpath("//button[contains(@class, \"train_Search\")]")).click();
 		
-		
-//		Thread.sleep(2000l);
-//		WebElement e = driver.findElement(By.xpath("//span[contains(text(), \"Results for\")]"));
-//		String str = e.getText();
-//		int totalResults = Integer.parseInt(str.substring(0,2));
-//		
-//		System.out.println(totalResults);
-		
+		// Count number of results
 		Thread.sleep(3000l);
 		List<WebElement> resultTile = driver.findElements(By.xpath("//div[contains(@class, 'form-group no-pad')]"));
 		int count = resultTile.size();
 		System.out.println(count);
 		
+		for(int i=1; i<=count; i++) {
 		Thread.sleep(2000l);
-		driver.findElement(By.xpath("(//div[contains(@class, 'form-group no-pad')])[1]//td//strong[contains(text(),'3A')]")).click();
-		Thread.sleep(3000l);
-		driver.findElement(By.xpath("//td//div[contains(@class,\"AVAILABLE\")]")).click();
-		Thread.sleep(2000l);
-		driver.findElement(By.xpath("(//div[contains(@class, 'form-group no-pad')])[1]//button[contains(text(), \"Book Now\")]")).click();
+		List<WebElement> journeyClass = driver.findElements(By.xpath("(//div[contains(@class, 'form-group no-pad')])["+i+"]//td//strong[contains(text(),'3A')]"));
 		
+		if(journeyClass.size() > 0) {
+			journeyClass.get(0).click();
+			Thread.sleep(2000l);
+			driver.findElement(By.xpath("//td//div[contains(@class,\"AVAILABLE\")]")).click();
+			Thread.sleep(2000l);
+			driver.findElement(By.xpath("(//div[contains(@class, 'form-group no-pad')])["+i+"]//button[contains(text(), \"Book Now\")]")).click();
+			break;
+		}
+	}
 		
 		Thread.sleep(2000l);
 		driver.findElement(By.xpath("//button//span[contains(text(),\"I Agree\")]")).click();
@@ -104,16 +105,6 @@ public class BookSeat {
 		Thread.sleep(1000l);
 //		driver.findElement(By.xpath("//label[contains(text(),\"Login & Booking With OTP\")]")).click();
 		driver.findElement(By.xpath("//button[contains(text(),\"SIGN IN\")]")).click();
-		
-		
-		
-		
-//		for(int i=1; i<=count; i++) {
-//			Thread.sleep(2000l);
-//			driver.findElement(By.xpath("(//div[contains(@class, 'form-group no-pad')])["+i+"]//td//strong[contains(text(),'2A')]")).click();
-//		}
-		
-		
 		
 	}
 
